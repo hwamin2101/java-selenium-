@@ -8,17 +8,31 @@ import session1.utils.ConfigReader;
 public class LocatorTest extends BaseTest {
 
     @Test
-    public void verifyLocatorStrategies(){
+    public void verifyLocatorStrategies() {
         driver.get(ConfigReader.get("ex2.url"));
 
-        driver.findElement(ElementLocators.TEXT_BOX_MENU).click();
+        driver.findElement(
+                ElementLocators.menuByText("Text Box")
+        ).click();
 
-        driver.findElement(ElementLocators.FULL_NAME).sendKeys("Test");
-        driver.findElement(ElementLocators.EMAIL).sendKeys("test123@test.com");
-        driver.findElement(ElementLocators.CURRENT_ADDRESS).sendKeys("HN");
+        driver.findElement(
+                ElementLocators.inputById("userName")
+        ).sendKeys(ConfigReader.get("fullName"));
 
-        driver.findElement(ElementLocators.CHECK_BOX_MENU).click();
-        driver.findElement(ElementLocators.WEB_TABLE_MENU).click();
+        driver.findElement(
+                ElementLocators.inputById("userEmail")
+        ).sendKeys(ConfigReader.get("email"));
+
+        driver.findElement(
+                ElementLocators.CURRENT_ADDRESS
+        ).sendKeys(ConfigReader.get("currentAddress"));
+
+        driver.findElement(
+                ElementLocators.menuByText("Check Box")
+        ).click();
+
+        driver.findElement(
+                ElementLocators.menuByText("Web Tables")
+        ).click();
     }
-
 }
