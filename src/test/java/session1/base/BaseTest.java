@@ -52,13 +52,19 @@ public class BaseTest {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(locator)
+                ExpectedConditions.presenceOfElementLocated(locator)
         );
 
         ((JavascriptExecutor) driver)
-                .executeScript("arguments[0].scrollIntoView(true);", element);
+                .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
 
-        element.click();
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+        } catch (ElementClickInterceptedException e) {
+            ((JavascriptExecutor) driver)
+                    .executeScript("arguments[0].click();", element);
+        }
     }
+
 
 }
