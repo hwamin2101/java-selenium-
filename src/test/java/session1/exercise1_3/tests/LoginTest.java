@@ -24,7 +24,8 @@ public class LoginTest extends BaseTest {
         driver.findElement(LoginLocators.PASSWORD_INPUT)
                 .sendKeys(ConfigReader.get("ex3.password"));
 
-        driver.findElement(LoginLocators.SUBMIT_BUTTON).click();
+        safeClick(LoginLocators.SUBMIT_BUTTON);
+
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
