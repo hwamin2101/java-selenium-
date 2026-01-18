@@ -1,4 +1,4 @@
-package session1.exercise1_1.utils;
+package session1.utils;
 
 import java.io.InputStream;
 import java.util.Properties;
