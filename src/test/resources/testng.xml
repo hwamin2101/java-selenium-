@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="CI Test Suite">
+    <test name="Calculator Tests">
+        <packages>
+            <package name="session1.exercise2_1.tests"/>
+        </packages>
+    </test>
+</suite>
