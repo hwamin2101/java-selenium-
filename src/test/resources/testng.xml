@@ -6,9 +6,7 @@
     Features: Multiple suites, Selected classes/methods, Parameters, Parallel execution
 -->
 
-<suite name="Exercise 2.2 - TestNG XML Configuration Suite" 
-       parallel="tests" 
-       thread-count="3" 
+<suite name="Exercise 2.2 - TestNG XML Configuration Suite"
        verbose="2">
 
     <!-- Global Suite Parameters -->
