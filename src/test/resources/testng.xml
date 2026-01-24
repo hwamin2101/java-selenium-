@@ -41,7 +41,7 @@
     </test>
 
     <!--REGRESSION TEST SUITE-->
-    <test name="Regression Tests" parallel="methods" thread-count="2">
+    <test name="Regression Tests" parallel="false" thread-count="2">
         <parameter name="testData" value="regression_data"/>
         <parameter name="retryCount" value="2"/>
         
@@ -96,7 +96,7 @@
     </test>
 
     <!--ADVANCED: PARAMETERIZED PARALLEL SUITE-->
-    <test name="Cross-Browser Parameterized Tests" parallel="methods" thread-count="3">
+    <test name="Cross-Browser Parameterized Tests" parallel="false" thread-count="3">
         <parameter name="browser" value="firefox"/>
         <parameter name="environment" value="staging"/>
         <parameter name="testMode" value="parallel"/>
