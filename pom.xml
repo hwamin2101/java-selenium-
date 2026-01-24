@@ -71,6 +71,25 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.3</version>
+                <configuration>
+                    <!-- Use TestNG XML configuration -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    
+                    <!-- Generate detailed reports -->
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <trimStackTrace>false</trimStackTrace>
+                    <printSummary>true</printSummary>
+                    
+                    <!-- System properties for tests -->
+                    <systemPropertyVariables>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <browser>${browser}</browser>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <environment>${environment}</environment>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
 
         </plugins>

@@ -1,10 +1,143 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="CI Test Suite">
-    <test name="Calculator Tests">
-        <packages>
-            <package name="session1.exercise2_1.tests"/>
-        </packages>
+<!-- 
+    EXERCISE 2.2: TestNG XML Configuration
+    Features: Multiple suites, Selected classes/methods, Parameters, Parallel execution
+-->
+
+<suite name="Exercise 2.2 - TestNG XML Configuration Suite" 
+       parallel="tests" 
+       thread-count="3" 
+       verbose="2">
+
+    <!-- Global Suite Parameters -->
+    <parameter name="browser" value="chrome"/>
+    <parameter name="environment" value="test"/>
+    <parameter name="timeout" value="10"/>
+
+    <!--SMOKE TEST SUITE-->
+    <test name="Smoke Tests" parallel="false">
+        <parameter name="testData" value="smoke_data"/>
+        
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        
+        <classes>
+            <!-- Selected test methods from CalculatorTest -->
+            <class name="session1.exercise2_1.tests.CalculatorTest">
+                <methods>
+                    <include name="testAddition"/>
+                    <include name="testSubtraction"/>
+                </methods>
+            </class>
+            
+            <!-- All tests from FirstTest -->
+            <class name="session1.exercise1_1.tests.FirstTest"/>
+        </classes>
+    </test>
+
+    <!--REGRESSION TEST SUITE-->
+    <test name="Regression Tests" parallel="methods" thread-count="2">
+        <parameter name="testData" value="regression_data"/>
+        <parameter name="retryCount" value="2"/>
+        
+        <groups>
+            <run>
+                <include name="regression"/>
+            </run>
+        </groups>
+        
+        <classes>
+            <!-- Selected methods from CalculatorTest -->
+            <class name="session1.exercise2_1.tests.CalculatorTest">
+                <methods>
+                    <include name="testMultiplication"/>
+                    <include name="testDivision"/>
+                </methods>
+            </class>
+            
+            <!-- All methods from LocatorTest -->
+            <class name="session1.exercise1_2.tests.LocatorTest"/>
+        </classes>
+    </test>
+
+    <!--FULL CALCULATOR SUITE -->
+    <test name="Complete Calculator Tests" parallel="false">
+        <parameter name="calculatorMode" value="advanced"/>
+        <parameter name="precision" value="2"/>
+        
+        <!-- Run all tests in CalculatorTest class -->
+        <classes>
+            <class name="session1.exercise2_1.tests.CalculatorTest"/>
+        </classes>
+    </test>
+
+    <!--LOGIN & DYNAMIC TESTS SUITE-->
+    <test name="UI Interaction Tests" parallel="classes" thread-count="2">
+        <parameter name="baseUrl" value="https://the-internet.herokuapp.com"/>
+        <parameter name="waitTimeout" value="15"/>
+        
+        <classes>
+            <!-- Selected specific methods -->
+            <class name="session1.exercise1_3.tests.LoginTest">
+                <methods>
+                    <include name="testValidLogin"/>
+                    <include name="testInvalidLogin"/>
+                </methods>
+            </class>
+            
+            <!-- All methods from DynamicLoadingTest -->
+            <class name="session1.exercise1_4.tests.DynamicLoadingTest"/>
+        </classes>
+    </test>
+
+    <!--ADVANCED: PARAMETERIZED PARALLEL SUITE-->
+    <test name="Cross-Browser Parameterized Tests" parallel="methods" thread-count="3">
+        <parameter name="browser" value="firefox"/>
+        <parameter name="environment" value="staging"/>
+        <parameter name="testMode" value="parallel"/>
+        
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <include name="edge"/>
+            </run>
+        </groups>
+        
+        <classes>
+            <!-- Mix of different test classes with specific methods -->
+            <class name="session1.exercise2_1.tests.CalculatorTest">
+                <methods>
+                    <include name="testAddition"/>
+                    <include name="testDivisionByZero"/>
+                </methods>
+            </class>
+            
+            <class name="session1.exercise1_1.tests.FirstTest"/>
+        </classes>
+    </test>
+
+    <!--EDGE CASES SUITE-->
+    <test name="Edge Case Tests">
+        <parameter name="testMode" value="edge"/>
+        <parameter name="strictMode" value="true"/>
+        
+        <groups>
+            <run>
+                <include name="edge"/>
+            </run>
+        </groups>
+        
+        <classes>
+            <class name="session1.exercise2_1.tests.CalculatorTest">
+                <methods>
+                    <include name="testDivisionByZero"/>
+                </methods>
+            </class>
+        </classes>
     </test>
 </suite>
