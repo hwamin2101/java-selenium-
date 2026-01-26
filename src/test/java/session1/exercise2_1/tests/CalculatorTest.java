@@ -3,11 +3,13 @@ package session1.exercise2_1.tests;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import session1.exercise2_1.calculator.Calculator;
 
 public class CalculatorTest {
 
     private int a;
     private int b;
+    private Calculator calculator;
 
     /* ===================== BEFORE ===================== */
 
@@ -26,9 +28,10 @@ public class CalculatorTest {
         System.out.println("BeforeClass - Initialize CalculatorTest");
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void beforeMethod() {
         System.out.println("BeforeMethod - Reset test data");
+        calculator = new Calculator();
         a = 10;
         b = 5;
     }
@@ -37,25 +40,25 @@ public class CalculatorTest {
 
     @Test(priority = 1, groups = {"smoke"})
     public void testAddition() {
-        int result = a + b;
+        int result = calculator.add(a, b);
         Assert.assertEquals(result, 15, "Addition calculation is incorrect");
     }
 
     @Test(priority = 2, groups = {"smoke"})
     public void testSubtraction() {
-        int result = a - b;
+        int result = calculator.subtract(a, b);
         Assert.assertEquals(result, 5, "Subtraction calculation is incorrect");
     }
 
     @Test(priority = 3, groups = {"regression"})
     public void testMultiplication() {
-        int result = a * b;
+        int result = calculator.multiply(a, b);
         Assert.assertEquals(result, 50, "Multiplication calculation is incorrect");
     }
 
     @Test(priority = 4, groups = {"regression"}, dependsOnMethods = "testMultiplication")
     public void testDivision() {
-        int result = a / b;
+        int result = calculator.divide(a, b);
         Assert.assertEquals(result, 2, "Division calculation is incorrect");
     }
 
@@ -64,12 +67,9 @@ public class CalculatorTest {
     public void testDivisionByZero() {
         SoftAssert softAssert = new SoftAssert();
 
-        int x = 10;
-        int y = 0;
-
         try {
-            int result = x / y;
-            softAssert.fail("Expected ArithmeticException but got result: " + result);
+            calculator.divide(10, 0);
+            softAssert.fail("Expected ArithmeticException but no exception thrown");
         } catch (ArithmeticException e) {
             softAssert.assertTrue(true, "ArithmeticException occurred as expected");
         }
