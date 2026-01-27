@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import session1.utils.ConfigReader;
 import session1.utils.ElementActions;
 import org.openqa.selenium.*;
@@ -21,8 +23,12 @@ public class BaseTest {
     protected ElementActions actions;
 
     @BeforeMethod
-    public void setUp() {
-        String browser = ConfigReader.get("browser");
+    @Parameters("browser")
+    public void setUp(@Optional("chrome") String browser) {
+//        String browser = ConfigReader.get("browser");
+        if(browser == null || browser.isEmpty()){
+            browser = "chrome";
+        }
 
         if ("chrome".equalsIgnoreCase(browser)) {
             WebDriverManager.chromedriver().setup();
@@ -39,6 +45,9 @@ public class BaseTest {
 
             driver = new ChromeDriver(options);
             actions = new ElementActions(driver);
+        }
+        if (driver == null){
+            throw new RuntimeException("WebDriver is not initialized" + browser);
         }
 
         driver.manage().window().maximize();
