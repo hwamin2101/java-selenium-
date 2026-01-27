@@ -7,7 +7,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import session1.utils.ConfigReader;
-import session1.utils.ElementActions;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
 
 public class BaseTest {
 
@@ -44,4 +49,24 @@ public class BaseTest {
             driver.quit();
         }
     }
+
+    protected void safeClick(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement element = wait.until(
+                ExpectedConditions.presenceOfElementLocated(locator)
+        );
+
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+        } catch (ElementClickInterceptedException e) {
+            ((JavascriptExecutor) driver)
+                    .executeScript("arguments[0].click();", element);
+        }
+    }
+
+
 }
