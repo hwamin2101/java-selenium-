@@ -11,28 +11,24 @@ public class LocatorTest extends BaseTest {
     public void verifyLocatorStrategies() {
         driver.get(ConfigReader.get("ex2.url"));
 
-        driver.findElement(
-                ElementLocators.menuByText("Text Box")
-        ).click();
+        actions.safeClick(ElementLocators.menuByText("Text Box"));
 
-        driver.findElement(
-                ElementLocators.inputById("userName")
-        ).sendKeys(ConfigReader.get("fullName"));
+        actions.type(
+                ElementLocators.inputById("userName"),
+                ConfigReader.get("fullName")
+        );
 
-        driver.findElement(
-                ElementLocators.inputById("userEmail")
-        ).sendKeys(ConfigReader.get("email"));
+        actions.type(
+                ElementLocators.inputById("userEmail"),
+                ConfigReader.get("email")
+        );
 
-        driver.findElement(
-                ElementLocators.CURRENT_ADDRESS
-        ).sendKeys(ConfigReader.get("currentAddress"));
+        actions.type(
+                ElementLocators.CURRENT_ADDRESS,
+                ConfigReader.get("currentAddress")
+        );
 
-        driver.findElement(
-                ElementLocators.menuByText("Check Box")
-        ).click();
-
-        driver.findElement(
-                ElementLocators.menuByText("Web Tables")
-        ).click();
+        actions.safeClick(ElementLocators.menuByText("Check Box"));
+        actions.safeClick(ElementLocators.menuByText("Web Tables"));
     }
 }

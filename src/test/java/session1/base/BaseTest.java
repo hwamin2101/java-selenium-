@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import session1.utils.ConfigReader;
+import session1.utils.ElementActions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,6 +18,7 @@ import java.time.Duration;
 public class BaseTest {
 
     protected WebDriver driver;
+    protected ElementActions actions;
 
     @BeforeMethod
     public void setUp() {
@@ -36,6 +38,7 @@ public class BaseTest {
             options.addArguments("--window-size=1920,1080");
 
             driver = new ChromeDriver(options);
+            actions = new ElementActions(driver);
         }
 
         driver.manage().window().maximize();
