@@ -7,4 +7,5 @@ public class LoginLocators {
     public static final By PASSWORD_INPUT = By.id("password");
     public static final By SUBMIT_BUTTON = By.id("submit");
     public static final By SUCCESS_MESSAGE = By.tagName("h1");
+
 }
