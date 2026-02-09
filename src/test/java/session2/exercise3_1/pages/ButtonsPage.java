@@ -23,6 +23,9 @@ public class ButtonsPage extends BasePage {
     private final By doubleClickMsg = By.id("doubleClickMessage");
     private final By rightClickMsg = By.id("rightClickMessage");
     private final By dynamicClickMsg = By.id("dynamicClickMessage");
+    private final By draggable = By.id("draggable");
+    private final By droppable = By.id("droppable");
+    private final By dropText = By.xpath("//div[@id='droppable']/p");
 
     public ButtonsPage(WebDriver driver) {
         super(driver);
@@ -54,6 +57,16 @@ public class ButtonsPage extends BasePage {
                 .perform();
     }
 
+    public void dragAndDrop(){
+        WebElement drag = wait.until(ExpectedConditions.visibilityOfElementLocated(draggable));
+        WebElement drop = wait.until(ExpectedConditions.visibilityOfElementLocated(draggable));
+        scrollTo(drop);
+        new Actions(driver)
+                .dragAndDrop(drag,drop)
+                .perform();
+    }
+
+
     public void dynamicClickButton() {
         scrollTo(dynamicClickBtn);
         wait.until(ExpectedConditions.elementToBeClickable(dynamicClickBtn));
@@ -62,6 +75,10 @@ public class ButtonsPage extends BasePage {
                 .moveToElement(dynamicClickBtn)
                 .click()
                 .perform();
+    }
+
+    public boolean isDropped(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(dropText)).getText().contains("Drop here");
     }
 
 

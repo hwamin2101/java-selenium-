@@ -26,5 +26,11 @@ public class ButtonsTest extends BaseTest {
 
         // Advanced test
         buttonsPage.advancedActionChain();
+
+        // Test 4: drag and drop button
+        driver.get(ConfigReader.get("ex3.dragAndDrop"));
+        ButtonsPage buttonsPage1 = new ButtonsPage(driver);
+        buttonsPage1.dragAndDrop();
+        Assert.assertTrue(buttonsPage1.isDropped());
     }
 }
