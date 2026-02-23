@@ -92,7 +92,39 @@ public class BaseTest {
                     .executeScript("arguments[0].click();", element);
         }
     }
+    protected void reopenDriver() {
 
+        if (driver != null) {
+            driver.quit();
+        }
+
+        ChromeOptions options = new ChromeOptions();
+
+        if ("true".equalsIgnoreCase(ConfigReader.get("headless"))) {
+            options.addArguments("--headless=new");
+        }
+
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");
+
+        String downloadPath = Paths
+                .get(ConfigReader.get("download.dir"))
+                .toAbsolutePath()
+                .toString();
+
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadPath);
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("profile.default_content_settings.popups", 0);
+
+        options.setExperimentalOption("prefs", prefs);
+
+        driver = new ChromeDriver(options);
+        actions = new ElementActions(driver);
+
+        driver.manage().window().maximize();
+    }
 
 }
 
